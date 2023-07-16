@@ -3,40 +3,33 @@ import { useCallback, useEffect, useState } from "react";
 
 import { SickName, useApi } from "../context/APIContext";
 
-const useSearch = () => {
-  const [word, setWord] = useState<string>("");
+const useSearch = (word: string) => {
   const [searchList, setSearchList] = useState<SickName>([]);
+  const [isSearch, setIsSearch] = useState<boolean>(false);
   const API = useApi();
 
-  let isSearch = false;
-
-  const getSearchData = useCallback(async () => {
-    const response = await API?.getSearch(word);
-    if (response) setSearchList(response.sickName);
-  }, [API, word]);
-
-  const changeWord = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setWord(event.target.value);
+  const getSearchData = useCallback(
+    async (word: string) => {
+      const response = await API?.getSearch(word);
+      if (response) setSearchList(response.sickName);
     },
-    []
+    [API]
   );
 
   useEffect(() => {
     if (word.length > 0) {
-      isSearch = true;
-      getSearchData();
+      setIsSearch(true);
+      getSearchData(word);
     }
     if (word.length === 0) {
-      isSearch = false;
+      setIsSearch(false);
     }
     return () => {
-      setWord("");
       setSearchList([]);
     };
   }, [word]);
 
-  return { changeWord, searchList, word, isSearch };
+  return { searchList, isSearch };
 };
 
 export default useSearch;

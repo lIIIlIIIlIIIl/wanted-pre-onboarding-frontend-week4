@@ -5,6 +5,8 @@
   border: 2px solid #ffffff;
   background-color: #ffffff;
 
+  margin-bottom: 15px;
+
   &_inputBox {
     width: 80%;
     font-weight: 400;
@@ -36,5 +38,39 @@
     color: white;
     font-weight: 600;
     cursor: pointer;
+  }
+}
+
+.searchList {
+  width: 490px;
+  max-height: 490px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
+  & > ul {
+    height: 100%;
+    padding: 30px;
+
+    & > p {
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: #b3b7bb;
+    }
+
+    & > li {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      word-break: break-all;
+      text-overflow: ellipsis;
+
+      width: 100%;
+      font-size: 18px;
+      padding-bottom: 24px;
+
+      cursor: pointer;
+    }
   }
 }
