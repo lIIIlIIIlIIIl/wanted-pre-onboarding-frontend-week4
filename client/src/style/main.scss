@@ -1,0 +1,19 @@
+@import "./home";
+@import "./search";
+
+body {
+  background-color: #cae9ff;
+}
+
+.fl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fl-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

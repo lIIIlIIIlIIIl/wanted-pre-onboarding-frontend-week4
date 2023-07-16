@@ -1,0 +1,40 @@
+.search {
+  width: 100%;
+  border-radius: 42px;
+
+  border: 2px solid #ffffff;
+  background-color: #ffffff;
+
+  &_inputBox {
+    width: 80%;
+    font-weight: 400;
+
+    padding: 20px 10px 20px 24px;
+  }
+
+  &_input {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding-right: 25px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  &_btnBox {
+    width: 10%;
+  }
+
+  &_btn {
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    border: none;
+    background-color: #007be9;
+
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
