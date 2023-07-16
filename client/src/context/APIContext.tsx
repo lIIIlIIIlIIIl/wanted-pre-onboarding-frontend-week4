@@ -1,11 +1,13 @@
 import { createContext, useContext } from "react";
 
+export type SickName = string[];
+
 interface SearchType {
-  sickName: string[];
+  sickName: SickName;
 }
 
 interface SearchSerivceType {
-  getSearch: (word: string) => Promise<SearchType>;
+  getSearch: (word: string) => Promise<SearchType | undefined>;
 }
 
 interface ProviderProps {
