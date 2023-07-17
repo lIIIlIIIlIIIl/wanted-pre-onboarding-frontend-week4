@@ -11,15 +11,15 @@ const useSearch = (word: string) => {
   const getSearchData = async (word: string) => {
     const response = await API?.getSearch(word);
     if (response) setSearchList(response.sickName);
+    console.info("calling api");
   };
 
   useEffect(() => {
-    if (word.length > 0) {
+    const delayTimer = setTimeout(() => {
       getSearchData(word);
-    }
-    if (word.length === 0) {
-    }
+    }, 500);
     return () => {
+      clearTimeout(delayTimer);
       setSearchList([]);
     };
   }, [word]);
