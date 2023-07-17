@@ -4,8 +4,6 @@
 
 ## 구현목표
 
----
-
 </br>
 
 ### 검색창 및 검색어 추천 기능 구현
@@ -25,8 +23,6 @@
 
 ## 사용한 기술
 
----
-
 - React
 - TypeScirpt
 - SCSS
@@ -36,8 +32,6 @@
 </br>
 
 ## 구현 방법
-
----
 
 ### 1. API 호출 횟수 줄이기
 
@@ -62,9 +56,6 @@ useEffect(() => {
 입력창(input)에 단어가 작성 되면 onChange 이벤트가 발생하게 되고 word의 상태 값이 변경됩니다. 변경 될때마다 useEffect 함수 안에 있는 `setTimeOut` 함수가 실행되어 시간을 카운트합니다.
 입력창의 입력이 완료되어 더 이상 onChage 이벤트가 발생하지 않으면 0.5초 후에 `getSearchData`함수(API 호출 함수)를 실행하게 됩니다.
 
-</br>
-
-**시연 영상**
 </br>
 
 ![reduce](https://github.com/lIIIlIIIlIIIl/wanted-pre-onboarding-frontend-week4/assets/101863629/0110034c-b73b-4dbc-8593-00c6e9706ca7)
@@ -131,10 +122,10 @@ const handleSearchData = (data: string[]) => {
 
 </br>
 
-**시연 영상**
-</br>
-
 ![cache](https://github.com/lIIIlIIIlIIIl/wanted-pre-onboarding-frontend-week4/assets/101863629/fe491405-0602-4d9d-bcbc-c2b68c10d6ea)
+
+</br>
+</br>
 
 ### 3. 키보드만으로 추천 검색어들로 이동
 
@@ -217,9 +208,6 @@ const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
 
 추천 검색어(`searchList`)의 index가 `selectedIndex`인 경우 `highlight` 스타일을 적용하여 선택된 UI를 확인할 수 있도록 하였습니다.
 
-</br>
-
-**시연 영상**
 </br>
 
 ![keyEvent](https://github.com/lIIIlIIIlIIIl/wanted-pre-onboarding-frontend-week4/assets/101863629/67796fe4-9cf6-4362-b6cf-2761d35597a1)
