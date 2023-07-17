@@ -1,18 +1,46 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef } from "react";
 import { SickName } from "../context/APIContext";
 
 interface SearchListProps {
   searchList: SickName;
+  selectedIndex: number;
 }
 
-const SearchList = ({ searchList }: SearchListProps) => {
+const SearchList = ({ searchList, selectedIndex }: SearchListProps) => {
+  const listRef = useRef<HTMLUListElement>(null);
+
+  const scrollToSelectedItem = () => {
+    if (listRef.current && selectedIndex >= 0) {
+      const selectedElement = listRef.current.childNodes[
+        selectedIndex
+      ] as HTMLElement;
+      if (selectedElement) {
+        selectedElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    scrollToSelectedItem();
+  }, [selectedIndex]);
+
   return (
     <div className="searchList">
-      <ul>
+      <ul ref={listRef}>
         {searchList.length > 0 ? (
           <>
             <p>추천 검색어</p>
-            {searchList.map((item) => (
-              <li key={item}>{item}</li>
+            {searchList.map((item, index) => (
+              <li
+                key={item}
+                className={selectedIndex === index ? "highlighted" : ""}
+              >
+                <span className="searchItem">{item}</span>
+              </li>
             ))}
           </>
         ) : (

@@ -53,6 +53,9 @@
     height: 100%;
     padding: 30px;
 
+    display: flex;
+    flex-direction: column;
+
     & > p {
       margin-bottom: 24px;
       font-size: 14px;
@@ -60,17 +63,26 @@
     }
 
     & > li {
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      word-break: break-all;
-      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      padding: 10px;
 
-      width: 100%;
       font-size: 18px;
-      padding-bottom: 24px;
 
       cursor: pointer;
     }
   }
+}
+
+.searchItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+}
+
+.highlighted {
+  border: 3px solid #007be9;
+  border-radius: 15px;
 }
