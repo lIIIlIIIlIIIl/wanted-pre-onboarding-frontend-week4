@@ -6,7 +6,7 @@ interface SearchType {
   sickName: SickName;
 }
 
-interface SearchSerivceType {
+export interface SearchSerivceType {
   getSearch: (word: string) => Promise<SearchType | undefined>;
 }
 
