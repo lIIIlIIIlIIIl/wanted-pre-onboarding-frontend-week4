@@ -1,8 +1,41 @@
 **Wanted-Pre-Onboarding-Fontend-Week4**
 
+## 프로젝트 소개
+
+사용자가 입력한 검색어에 대한 검색어 추천 기능을 제공하는 애플리케이션입니다.
+
+</br>
+</br>
+
+## 사용방법
+
+**server** (해당 서버는 [assignment-api](https://github.com/walking-sunset/assignment-api)에 의존하고 있습니다.) 폴더에서 `npm install` 후 `npm start`로 실행시키면 서버를 실행할 수 있습니다.
+
+</br>
+
+**client** 폴더에서 `npm install` 후 `npm start`로 실행시키면 애플리케이션을 실행할 수 있습니다.
+
+</br>
+</br>
+
+## 폴더 구조
+
+```
+src
+├─components
+├─context
+├─hooks
+├─service
+├─style
+└─utils
+```
+
+</br>
 </br>
 
 ## 구현목표
+
+**[한국임상정보](https://clinicaltrialskorea.com/) 사이트의 검색영역을 클론하기**
 
 </br>
 
@@ -70,55 +103,37 @@ useSate을 사용하여 검색어에 대한 자동 완성 데이터를 로컬 �
 </br>
 
 ```ts
-// scr/hooks/useSearch.tsx
+// scr/utils/getSearchKeywordWithCach.ts
 
-type CacheData = {
-  [key: string]: {
-    data: string[]; // 자동 완성 데이터 배열
-    expiration: number; // 만료 시간
-  };
-};
+const getSearchKeywordWithCach = (function () {
+  const cache: CacheData = {};
+  const EXPIRATION_TIME = 1000 * 60;
 
-const EXPIRATION_TIME = 1000 * 60; // 1분
+  const searchKeyword = (keyword: string, API: SearchSerivceType | null) => {
+    if (cache[keyword] && cache[keyword].expiration > Date.now()) {
+      return cache[keyword].data;
+    } else {
+      return API?.getSearch(keyword).then((data) => {
+        console.info("calling api");
 
-const [cacheData, setCacheData] = useState<CacheData>({});
-
-const getSearchData = (word: string) => {
-  if (cacheData[word] && cacheData[word].expiration > Date.now()) {
-    // 캐시에 데이터가 있고 시간이 만료되지 않은 경우, 캐시 데이터를 사용
-
-    handleSearchData(cacheData[word].data);
-  } else {
-    // API 호출 및 데이터 업데이트
-
-    return API?.getSearch(word)
-      .then((data) => {
         if (data && data.sickName.length > 0) {
           const expiration = Date.now() + EXPIRATION_TIME;
-          setCacheData((prev) => ({
-            ...prev,
-            [word]: {
-              data: data.sickName,
-              expiration,
-            },
-          }));
-          setSearchList(data.sickName);
+          const cacheData = { data: data.sickName, expiration };
+          cache[keyword] = cacheData;
+          return data.sickName;
         }
-      })
-      .catch((error) => {
-        console.error("API 호출 에러", error);
       });
-  }
-};
+    }
+  };
+  return searchKeyword;
+})();
 
-const handleSearchData = (data: string[]) => {
-  setSearchList(data);
-};
+export default getSearchKeywordWithCach;
 ```
 
-위 코드에서 `cacheData` 상태를 사용하여 로컬 캐시를 관리합니다. `cacheData` 객체는 검색어를 키로 하고, 해당 검색어와 연관된 자동 완성 데이터를 `data`의 값으로, `expiration`의 값으로 만료시간을 갖는 매핑 구조를 가지고 있습니다.
+위 코드에서 `cache` 객체를 사용하여 로컬 캐시를 관리합니다. `cache` 객체는 검색어를 키로 하고, 해당 검색어와 연관된 자동 완성 데이터를 `data`의 값으로, `expiration`의 값으로 만료시간을 갖는 매핑 구조를 가지고 있습니다.
 
-검색어를 입력 받으면 로컬 캐시(`cacheData`)를 확인하고, 캐시에 해당 데이터가 있는지 확인합니다. 그 후에 캐시 데이터가 만료되지 않은 경우에는 API를 호출하지 않고 캐시된 데이터를 사용합니다. 캐시에 데이터가 없거나, 데이터가 있지만 시간이 만료된 경우에는 API를 호출하여 데이터를 가져온 후 데이터를 업데이트 합니다.
+검색어를 입력 받으면 로컬 캐시(`cache`)를 확인하고, 캐시에 해당 데이터가 있는지 확인합니다. 그 후에 캐시 데이터가 만료되지 않은 경우에는 API를 호출하지 않고 캐시된 데이터를 사용합니다. 캐시에 데이터가 없거나, 데이터가 있지만 시간이 만료된 경우에는 API를 호출하여 데이터를 가져온 후 데이터를 업데이트 합니다.
 
 </br>
 
